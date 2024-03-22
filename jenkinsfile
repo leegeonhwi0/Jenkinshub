@@ -6,7 +6,7 @@ pipeline {
     
     environment {
         strDockTag = "${TODAY}_${BUILD_ID}"
-        strDockImg = "choisieun/guestbook:${strDockTag}"
+        strDockImg = "lght2002002/guestbook:${strDockTag}"
     }
 
     stages {
@@ -72,7 +72,7 @@ pipeline {
         stage('Docker Image Push') {
             steps {
                 script {
-                    oDockImg = docker.withRegistry('', 'dockerhub-token') {
+                    oDockImg = docker.withRegistry('', 'dockerhub') {
                         oDockImg.push()
                     }
                 }
@@ -81,11 +81,11 @@ pipeline {
         stage('SSH guestbook') {
             steps {
                 sshagent(credentials: ['ssh-token']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.26 \
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.143 \
                     docker container rm -f guestbook"
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.26 \
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.143 \
                     docker container run -d -p 8888:80 --name guestbook \
-                    -e MYSQL_IP=10.0.10.26 \
+                    -e MYSQL_IP=10.0.10.143 \
                     -e MYSQL_PORT=3306 \
                     -e MYSQL_USER=root \
                     -e MYSQL_PASSWORD=education \
