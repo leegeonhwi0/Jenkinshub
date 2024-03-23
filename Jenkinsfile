@@ -72,7 +72,7 @@ pipeline {
         stage('Docker Image Push') {
             steps {
                 script {
-                    oDockImg = docker.withRegistry('', 'dockerhub') {
+                    oDockImg = docker.withRegistry('', 'docker-token') {
                         oDockImg.push()
                     }
                 }
