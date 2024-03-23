@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git (branch: 'main', url:'https://github.com/leegeonhwi0/jenkins-guestbook.git')
+                git (branch: 'main', url:'https://github.com/leegeonhwi0/https://github.com/leegeonhwi0/Jenkinshub.git')
             }
         }
         stage('Build') {
