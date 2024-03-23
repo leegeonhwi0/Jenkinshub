@@ -84,7 +84,7 @@ pipeline {
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.18 \
                     docker container rm -f guestbook"
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.18 \
-                    docker container run -d -p 8888:80 --name guestbook \
+                    docker container run -d -p 80:80 --name guestbook \
                     -e MYSQL_IP=10.0.10.18 \
                     -e MYSQL_PORT=3306 \
                     -e MYSQL_USER=root \
