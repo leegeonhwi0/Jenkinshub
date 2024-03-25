@@ -72,7 +72,7 @@ pipeline {
         stage('Docker Image Push') {
             steps {
                 script {
-                    oDockImg = docker.withRegistry('', 'docker-token') {
+                    oDockImg = docker.withRegistry('', 'dockerhub-token') {
                         oDockImg.push()
                     }
                 }
@@ -81,11 +81,11 @@ pipeline {
         stage('SSH guestbook') {
             steps {
                 sshagent(credentials: ['ssh-token']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.18 \
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.11.17 \
                     docker container rm -f guestbook"
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.10.18 \
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.11.17 \
                     docker container run -d -p 80:80 --name guestbook \
-                    -e MYSQL_IP=10.0.10.18 \
+                    -e MYSQL_IP=10.0.11.17 \
                     -e MYSQL_PORT=3306 \
                     -e MYSQL_USER=root \
                     -e MYSQL_PASSWORD=education \
